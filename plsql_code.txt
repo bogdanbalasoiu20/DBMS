@@ -1,0 +1,1222 @@
+--exercitiul 4
+
+create table FILM( 
+
+ID_FILM NUMBER PRIMARY KEY, 
+
+TITLU VARCHAR2(255), 
+
+REGIZOR VARCHAR2(100), 
+
+GEN VARCHAR2(50), 
+
+DURATA NUMBER, 
+
+ANUL_LANSARII NUMBER, 
+
+DESCRIERE VARCHAR2(2000) 
+
+); 
+
+ 
+
+create table SALA( 
+
+ID_SALA NUMBER PRIMARY KEY, 
+
+NUME_SALA VARCHAR2(100), 
+
+NR_LOCURI NUMBER); 
+
+ 
+
+ 
+
+CREATE TABLE PROIECTIE( 
+
+ID_PROIECTIE NUMBER PRIMARY KEY, 
+
+ID_FILM NUMBER, 
+
+ID_SALA NUMBER, 
+
+DATA_PROIECTIE DATE, 
+
+ORA_PROIECTIE VARCHAR2(20), 
+
+FOREIGN KEY (ID_FILM) REFERENCES FILM(ID_FILM), 
+
+FOREIGN KEY (ID_SALA) REFERENCES SALA(ID_SALA) 
+
+); 
+
+ 
+
+ 
+
+CREATE TABLE UTILIZATOR( 
+
+ID_UTILIZATOR NUMBER PRIMARY KEY, 
+
+NUME VARCHAR2(50), 
+
+PRENUME VARCHAR2(50), 
+
+EMAIL VARCHAR2(100) UNIQUE, 
+
+PAROLA VARCHAR2(50), 
+
+TIP_UTILIZATOR VARCHAR2(50) 
+
+); 
+
+ 
+
+ 
+
+CREATE TABLE RECENZIE( 
+
+ID_RECENZIE NUMBER PRIMARY KEY, 
+
+ID_FILM NUMBER, 
+
+ID_UTILIZATOR NUMBER, 
+
+NOTA NUMBER, 
+
+COMENTARIU VARCHAR2(2000), 
+
+FOREIGN KEY (ID_FILM) REFERENCES FILM(ID_FILM), 
+
+FOREIGN KEY (ID_UTILIZATOR) REFERENCES UTILIZATOR(ID_UTILIZATOR) 
+
+); 
+
+ 
+
+CREATE TABLE BILET( 
+
+ID_BILET NUMBER PRIMARY KEY, 
+
+ID_PROIECTIE NUMBER, 
+
+ID_UTILIZATOR NUMBER, 
+
+NUMAR_LOC NUMBER, 
+
+FOREIGN KEY (ID_PROIECTIE) REFERENCES PROIECTIE(ID_PROIECTIE), 
+
+FOREIGN KEY (ID_UTILIZATOR) REFERENCES UTILIZATOR(ID_UTILIZATOR) 
+
+); 
+
+ 
+
+ 
+
+CREATE TABLE REZERVARE( 
+
+ID_REZERVARE NUMBER PRIMARY KEY, 
+
+ID_PROIECTIE NUMBER, 
+
+ID_UTILIZATOR NUMBER, 
+
+NUMAR_LOC NUMBER, 
+
+FOREIGN KEY (ID_PROIECTIE) REFERENCES PROIECTIE(ID_PROIECTIE), 
+
+FOREIGN KEY (ID_UTILIZATOR) REFERENCES UTILIZATOR(ID_UTILIZATOR) 
+
+); 
+
+ 
+
+ 
+
+ 
+
+CREATE TABLE UTILIZATORI_LA_FILM (  
+
+id_film NUMBER NOT NULL, 
+
+ id_utilizator NUMBER NOT NULL,  
+
+PRIMARY KEY (id_film, id_utilizator),  
+
+CONSTRAINT fk_utilizatori_la_film_film FOREIGN KEY (id_film) REFERENCES FILM (id_film) ON DELETE CASCADE,  
+
+CONSTRAINT fk_utilizatori_la_film_utilizator FOREIGN KEY (id_utilizator) REFERENCES UTILIZATOR (id_utilizator) ON DELETE CASCADE ); 
+
+
+
+--exercitiul 5
+
+--Tabelul FILM 
+
+ 
+
+INSERT INTO FILM(ID_FILM,TITLU,REGIZOR,GEN,DURATA,ANUL_LANSARII,DESCRIERE) 
+
+  
+
+VALUES(100,'The Wolf Of Wall Street','Martin Scorsese','comedie neagra',179,2014,'Lupul de pe Wall Street (original The Wolf of Wall Street) este un film american de comedie neagră din 2013, regizat de Martin Scorsese, bazat pe memoriile cu același nume ale lui Jordan Belfort. Filmul a fost lansat pe 25 decembrie 2013. Scenariul a fost scris de Terence Winter, filmul avându-l ca protagonist pe Leonardo DiCaprio în rolul lui Belfort, un broker din New York care conduce o firmă care se ocupa cu fraude de titluri mobiliare și corupție pe Wall Street în anii 1990. De notat faptul ca scenaristul si producatorul Terence Winter a creat serialul TV "Boardwalk Empire" împreuna cu Martin Scorsese, difuzata de HBO din 2010. 
+
+  
+
+Filmul îi mai are în distribuție pe Jonah Hill, Margot Robbie, Matthew McConaughey și Jean Dujardin. Este cea de-a cincea colaborare dintre Scorsese și DiCaprio, și a doua dintre Scorsese și Winter, după Boardwalk Empire. 
+
+  
+
+Filmul a fost primit pozitiv de către critici, dar de asemenea este controversat pentru ambiguitatea sa morală, prezența drogurilor, și drepturile animalelor. Filmul a fost nominalizat pentru 5 premii Oscar, printre care "Cel mai bun film"(Best Picture) si "Cel mai bun regizor"(Best Director). Filmul este istoric semnificativ ca primul film important distribuit în întregime digital. Este de remarcat pentru a fi filmul de dramă cu cele mai multe ori pronunțat cuvântul "fuck".' 
+
+); 
+
+  
+
+INSERT INTO FILM(ID_FILM,TITLU,REGIZOR,GEN,DURATA,ANUL_LANSARII,DESCRIERE) 
+
+  
+
+VALUES(101,'Cars','John Lasseter','animatie',117,2006,NULL); 
+
+  
+
+INSERT INTO FILM(ID_FILM,TITLU,REGIZOR,GEN,DURATA,ANUL_LANSARII,DESCRIERE) 
+
+  
+
+VALUES(102,'Barbie',' Greta Gerwig','comedie',114,2023,'Barbie este un film de comedie fantasy din 2023 regizat de Greta Gerwig, care l-a scris împreună cu Noah Baumbach⁠(d). Bazat pe păpușile de modă Barbie de Mattel, este primul film cu acțiune în direct Barbie după multe filme animate pe computer direct-to-video și de televiziune în flux. Filmul îi are în rolurile principale pe Margot Robbie în rolul Barbie și Ryan Gosling în rolul lui Ken, care pleacă într-o călătorie de auto-descoperire după expulzarea lor din utopicul Ținut Barbie. În roluri secundare apar America Ferrera⁠(d), Kate McKinnon⁠(d), Issa Rae, Rhea Perlman⁠(d) și Will Ferrell.'); 
+
+  
+
+UPDATE FILM 
+
+SET REGIZOR='Greta Gerwig' 
+
+WHERE ID_FILM=102; 
+
+  
+
+INSERT INTO FILM(ID_FILM,TITLU,REGIZOR,GEN,DURATA,ANUL_LANSARII,DESCRIERE) 
+
+  
+
+VALUES(103,'Fast And Furios 4','Justin Lin','actiune',107,2009,'Au trecut opt ani de când ex-condamnatul Dominic Toretto (Diesel) a trecut granița spre Mexic și și-a asumat o viață de evadat. Acum, esuat pe o plajă de pe coasta Republicii Dominicane, trăiește din amintiri alături de Letty (Rodriguez) și încearcă să-și facă o nouă viață. Dar autoritățile sunt mereu doar cu un singur pas în spatele lui. Moartea tragică a unei persoane iubite îl aduce din nou pe Dom la L.A. unde reaprinde scânteia cu agentul FBI Brian O’Connor (Walker); cei doi își vor reuni forțele pentru a confrunta un traficant de droguri sociopat, care a inundat Statele Unite cu un drog mortal. Pentru a te infiltra într-o rețea care acționează underground, înseamnă să câștigi un loc într-o brigadă a morții care face trafic peste granița cu Mexicul prin niște tunele subterane săpate în peșteri. Cei doi locotenenți ai cartelului, Campos (JOHN ORTIZ, American Gangster, Miami Vice) și Fenix (LAZ ALONSO, Jarhead, Stomp the Yard), sunt singurii care le pot facilita lui Dom și Brian accesul în bandă si pot răspunde la întrebările lor. ' 
+
+); 
+
+  
+
+INSERT INTO FILM(ID_FILM,TITLU,REGIZOR,GEN,DURATA,ANUL_LANSARII,DESCRIERE) 
+
+  
+
+VALUES(104,'Oppenheimer','Christopher Nolan','thriller',180,2023,'Oppenheimer este un film britanico-american din anul 2023 scris, produs și regizat de Christopher Nolan. 
+
+Este un film biografic și o adaptare a cărții American Prometheus: The Triumph and Tragedy of J. Robert Oppenheimer (2005) de Kai Bird și Martin J. Sherwin despre Robert Oppenheimer, cel care a fost supranumit „părintele bombei atomice”. ' 
+
+); 
+
+  
+
+INSERT INTO FILM(ID_FILM,TITLU,REGIZOR,GEN,DURATA,ANUL_LANSARII,DESCRIERE) 
+
+  
+
+VALUES(105,'Spider-Man: No Way Home','Jon Watts','actiune',148,2021,NULL); 
+
+  
+
+INSERT INTO FILM(ID_FILM,TITLU,REGIZOR,GEN,DURATA,ANUL_LANSARII,DESCRIERE) 
+
+  
+
+VALUES(106,'Venom','Ruben Fleischer','SF',112,2018,'Venom este un film american cu supereroi din 2018, care prezintă personajul Marvel Comics cu același nume, produs de Columbia Pictures în asociere cu Marvel Entertainment,[5] Tencent Pictures⁠(d), Arad Productions, Matt Tolmach Productions și Pascal Pictures și distribuit de Sony Pictures Releasing⁠(d). Fiind primul film din Universul Spider-Man (SSU) de la Sony, a fost regizat de Ruben Fleischer⁠(d) după un scenariu de Jeff Pinkner⁠(d), Scott Rosenberg⁠(d) și Kelly Marcel⁠(d). Îi distribuie pe Tom Hardy în rolul lui Eddie Brock și Venom alături de Michelle Williams, Riz Ahmed, Scott Haze⁠(d) și Reid Scott⁠(d). În film jurnalistul Eddie dobândește superputeri după ce a devenit gazda unui simbiot extraterestru, Venom, (traducere literală Venin) a cărui specie intenționează să invadeze Pământul.' 
+
+); 
+
+  
+
+INSERT INTO FILM(ID_FILM,TITLU,REGIZOR,GEN,DURATA,ANUL_LANSARII,DESCRIERE) 
+
+  
+
+VALUES(107,'Titanic','James Cameron','dragoste',194,1997,'Titanic este un film epic romantic și de dezastru american lansat în 1997, regizat, scris, co-produs și co-montat de James Cameron. Este o adaptare fictivă a scufundării pachebotului RMS Titanic, care îi are în rolurile principale pe Leonardo DiCaprio și Kate Winslet. Aceștia sunt membri ai unor clase sociale diferite și se îndrăgostesc la bordul pachebotului, în timpul călătoriei sale inaugurale dezastruoase. În film, mai joacă actorii Billy Zane, Kathy Bates, Frances Fisher, Gloria Stuart, Bernard Hill, Jonathan Hyde, Victor Garber și Bill Paxton.' 
+
+); 
+
+  
+
+INSERT INTO FILM(ID_FILM,TITLU,REGIZOR,GEN,DURATA,ANUL_LANSARII,DESCRIERE) 
+
+  
+
+VALUES(108,'Masca','Chuck Russell','comedie',97,1994,'Stanley Ipkiss (Jim Carrey), este un angajat timid al băncii din Edge City, dar totul se schimbă după ce găsește o mască antică care-l transformă într-un supererou.' 
+
+); 
+
+  
+
+INSERT INTO FILM(ID_FILM,TITLU,REGIZOR,GEN,DURATA,ANUL_LANSARII,DESCRIERE) 
+
+  
+
+VALUES(109,'Annabelle','John R. Leonetti','horror',109,2014,'Annabelle este un film de groază supranatural american din 2014 regizat de John R. Leonetti și scris de Gary Dauberman. Rolurile principale au fost interpretate de actorii Annabelle Wallis, Ward Horton și Alfre Woodard. Filmul este produs de Peter Safran și James Wan. Este un prequel al filmului din 2013 The Conjuring și al doilea din seria The Conjuring series. Filmul a fost inspirat de o povestire cu o păpușă denumită Annabelle de Ed și Lorraine Warren.' 
+
+); 
+
+
+--Tabelul SALA 
+
+ 
+
+INSERT INTO SALA(ID_SALA,NUME_SALA,NR_LOCURI) 
+
+VALUES(1,'Luceafarul',300); 
+
+  
+
+INSERT INTO SALA(ID_SALA,NUME_SALA,NR_LOCURI) 
+
+VALUES(2,'Haret',476); 
+
+  
+
+INSERT INTO SALA(ID_SALA,NUME_SALA,NR_LOCURI) 
+
+VALUES(3,'Sala Mare',600); 
+
+  
+
+INSERT INTO SALA(ID_SALA,NUME_SALA,NR_LOCURI) 
+
+VALUES(4,'Odeon',142); 
+
+  
+
+INSERT INTO SALA(ID_SALA,NUME_SALA,NR_LOCURI) 
+
+VALUES(5,'Mihai Eminescu',278); 
+
+  
+
+INSERT INTO SALA(ID_SALA,NUME_SALA,NR_LOCURI) 
+
+VALUES(6,'Sala Mica',117); 
+
+  
+
+INSERT INTO SALA(ID_SALA,NUME_SALA,NR_LOCURI) 
+
+VALUES(7,'Caragiale',458); 
+
+  
+
+INSERT INTO SALA(ID_SALA,NUME_SALA,NR_LOCURI) 
+
+VALUES(8,'Blaga',298); 
+
+  
+
+INSERT INTO SALA(ID_SALA,NUME_SALA,NR_LOCURI) 
+
+VALUES(9,'Sala Principala',550); 
+
+  
+
+INSERT INTO SALA(ID_SALA,NUME_SALA,NR_LOCURI) 
+
+VALUES(10,'Sala Sergiu Nicolaescu',312); 
+
+
+--Tabelul PROIECTIE 
+
+ 
+
+INSERT INTO PROIECTIE(ID_PROIECTIE,ID_FILM,ID_SALA,DATA_PROIECTIE,ORA_PROIECTIE) 
+
+VALUES(16,108,10,TO_DATE('2024-05-10','YYYY-MM-DD'),'20:00'); 
+
+  
+
+INSERT INTO PROIECTIE(ID_PROIECTIE,ID_FILM,ID_SALA,DATA_PROIECTIE,ORA_PROIECTIE) 
+
+VALUES(25,100,5,TO_DATE('2024-06-01','YYYY-MM-DD'),'18:30'); 
+
+  
+
+INSERT INTO PROIECTIE(ID_PROIECTIE,ID_FILM,ID_SALA,DATA_PROIECTIE,ORA_PROIECTIE) 
+
+VALUES(28,104,7,TO_DATE('2024-06-01','YYYY-MM-DD'),'15:00'); 
+
+  
+
+INSERT INTO PROIECTIE(ID_PROIECTIE,ID_FILM,ID_SALA,DATA_PROIECTIE,ORA_PROIECTIE) 
+
+VALUES(37,109,7,TO_DATE('2024-04-24','YYYY-MM-DD'),'21:45'); 
+
+  
+
+INSERT INTO PROIECTIE(ID_PROIECTIE,ID_FILM,ID_SALA,DATA_PROIECTIE,ORA_PROIECTIE) 
+
+VALUES(19,102,9,TO_DATE('2024-07-28','YYYY-MM-DD'),'19:30'); 
+
+  
+
+INSERT INTO PROIECTIE(ID_PROIECTIE,ID_FILM,ID_SALA,DATA_PROIECTIE,ORA_PROIECTIE) 
+
+VALUES(42,105,1,TO_DATE('2024-06-13','YYYY-MM-DD'),'17:00'); 
+
+  
+
+INSERT INTO PROIECTIE(ID_PROIECTIE,ID_FILM,ID_SALA,DATA_PROIECTIE,ORA_PROIECTIE) 
+
+VALUES(25,100,5,TO_DATE('2024-06-01','YYYY-MM-DD'),'18:30'); 
+
+  
+
+INSERT INTO PROIECTIE(ID_PROIECTIE,ID_FILM,ID_SALA,DATA_PROIECTIE,ORA_PROIECTIE) 
+
+VALUES(27,107,2,TO_DATE('2024-05-11','YYYY-MM-DD'),'14:50'); 
+
+  
+
+INSERT INTO PROIECTIE(ID_PROIECTIE,ID_FILM,ID_SALA,DATA_PROIECTIE,ORA_PROIECTIE) 
+
+VALUES(41,103,8,TO_DATE('2024-06-10','YYYY-MM-DD'),'18:00'); 
+
+  
+
+INSERT INTO PROIECTIE(ID_PROIECTIE,ID_FILM,ID_SALA,DATA_PROIECTIE,ORA_PROIECTIE) 
+
+VALUES(33,109,4,TO_DATE('2024-05-21','YYYY-MM-DD'),'22:30'); 
+
+  
+
+INSERT INTO PROIECTIE(ID_PROIECTIE,ID_FILM,ID_SALA,DATA_PROIECTIE,ORA_PROIECTIE) 
+
+VALUES(20,101,3,TO_DATE('2024-06-27','YYYY-MM-DD'),'13:00'); 
+
+  
+
+INSERT INTO PROIECTIE(ID_PROIECTIE,ID_FILM,ID_SALA,DATA_PROIECTIE,ORA_PROIECTIE) 
+
+VALUES(34,106,6,TO_DATE('2024-05-03','YYYY-MM-DD'),'12:30'); 
+
+  
+
+INSERT INTO PROIECTIE(ID_PROIECTIE,ID_FILM,ID_SALA,DATA_PROIECTIE,ORA_PROIECTIE) 
+
+VALUES(22,105,8,TO_DATE('2024-07-16','YYYY-MM-DD'),'19:55'); 
+
+  
+
+INSERT INTO PROIECTIE(ID_PROIECTIE,ID_FILM,ID_SALA,DATA_PROIECTIE,ORA_PROIECTIE) 
+
+VALUES(46,103,7,TO_DATE('2024-05-12','YYYY-MM-DD'),'23:00'); 
+
+INSERT INTO PROIECTIE(ID_PROIECTIE,ID_FILM,ID_SALA,DATA_PROIECTIE,ORA_PROIECTIE) 
+
+VALUES(39,100,4,TO_DATE('2024-04-26','YYYY-MM-DD'),'18:30'); 
+
+  
+
+INSERT INTO PROIECTIE(ID_PROIECTIE,ID_FILM,ID_SALA,DATA_PROIECTIE,ORA_PROIECTIE) 
+
+VALUES(44,106,10,TO_DATE('2024-06-30','YYYY-MM-DD'),'16:35'); 
+
+
+--Tabelul UTILIZATOR 
+
+ 
+
+INSERT INTO UTILIZATOR(ID_UTILIZATOR,NUME,PRENUME,EMAIL,PAROLA,TIP_UTILIZATOR) 
+
+VALUES(1,'Popescu','Andrei','popescu.andrei@gmail.com','parola12345','normal'); 
+
+  
+
+INSERT INTO UTILIZATOR(ID_UTILIZATOR,NUME,PRENUME,EMAIL,PAROLA,TIP_UTILIZATOR) 
+
+VALUES(2,'Ionescu','Bogdan','ionescu.bogdan@gmail.com','wdscwdvc23','premium'); 
+
+  
+
+INSERT INTO UTILIZATOR(ID_UTILIZATOR,NUME,PRENUME,EMAIL,PAROLA,TIP_UTILIZATOR) 
+
+VALUES(3,'Daniel','Marian','marian.daniel@yahoo.com','masina12$@','premium'); 
+
+  
+
+INSERT INTO UTILIZATOR(ID_UTILIZATOR,NUME,PRENUME,EMAIL,PAROLA,TIP_UTILIZATOR) 
+
+VALUES(4,'Frunza','David','david123@gmail.com','%89casa1','normal'); 
+
+  
+
+INSERT INTO UTILIZATOR(ID_UTILIZATOR,NUME,PRENUME,EMAIL,PAROLA,TIP_UTILIZATOR) 
+
+VALUES(5,'Popescu','Cristian','popescu.cristi@gmail.com','dwcw5$8U','normal'); 
+
+  
+
+INSERT INTO UTILIZATOR(ID_UTILIZATOR,NUME,PRENUME,EMAIL,PAROLA,TIP_UTILIZATOR) 
+
+VALUES(6,'Malone','Maria','malone.boss@yahoo.com','cevarandom','platina'); 
+
+  
+
+INSERT INTO UTILIZATOR(ID_UTILIZATOR,NUME,PRENUME,EMAIL,PAROLA,TIP_UTILIZATOR) 
+
+VALUES(7,'Dumitrescu','Ilie','sir.mister@gmail.com','axul-central-123','premium'); 
+
+  
+
+INSERT INTO UTILIZATOR(ID_UTILIZATOR,NUME,PRENUME,EMAIL,PAROLA,TIP_UTILIZATOR) 
+
+VALUES(8,'Coman','Florinel','fcoman.7@gmail.com','forzasteaua','platina'); 
+
+  
+
+INSERT INTO UTILIZATOR(ID_UTILIZATOR,NUME,PRENUME,EMAIL,PAROLA,TIP_UTILIZATOR) 
+
+VALUES(9,'Becali','Gigi','gigi.becali@gmail.com','oaie78','normal'); 
+
+  
+
+INSERT INTO UTILIZATOR(ID_UTILIZATOR,NUME,PRENUME,EMAIL,PAROLA,TIP_UTILIZATOR) 
+
+VALUES(10,'Damian','Florin','damian.florin@gmail.com','wedwe323)(','normal'); 
+
+  
+
+INSERT INTO UTILIZATOR(ID_UTILIZATOR,NUME,PRENUME,EMAIL,PAROLA,TIP_UTILIZATOR) 
+
+VALUES(11,'Laurentiu','Dan','l.dan@gmail.com','laptop#21','premium'); 
+
+  
+
+INSERT INTO UTILIZATOR(ID_UTILIZATOR,NUME,PRENUME,EMAIL,PAROLA,TIP_UTILIZATOR) 
+
+VALUES(12,'Florescu','Ionut','ionut.florescu76@gmail.com','oparola','normal'); 
+
+
+--Tabelul RECENZIE 
+
+ 
+
+INSERT INTO RECENZIE(ID_RECENZIE,ID_FILM,ID_UTILIZATOR,NOTA,COMENTARIU) 
+
+VALUES(1,100,9,8.5,'UN FILM BUN'); 
+
+  
+
+INSERT INTO RECENZIE(ID_RECENZIE,ID_FILM,ID_UTILIZATOR,NOTA,COMENTARIU) 
+
+VALUES(2,106,7,5,'NU SI-A MERITAT BANII'); 
+
+  
+
+INSERT INTO RECENZIE(ID_RECENZIE,ID_FILM,ID_UTILIZATOR,NOTA,COMENTARIU) 
+
+VALUES(3,108,9,6,'ACCTEPTABIL.NU M-A DAT PE SPATE'); 
+
+  
+
+INSERT INTO RECENZIE(ID_RECENZIE,ID_FILM,ID_UTILIZATOR,NOTA,COMENTARIU) 
+
+VALUES(4,103,2,10,'UN FILM EXCELENT. MI-A PLACUT ACTORUL PRINCIPAL'); 
+
+  
+
+INSERT INTO RECENZIE(ID_RECENZIE,ID_FILM,ID_UTILIZATOR,NOTA,COMENTARIU) 
+
+VALUES(5,105,6,3.7,'NU S-A RIDICAT LA NIVELUL ASTEPTARILOR'); 
+
+  
+
+INSERT INTO RECENZIE(ID_RECENZIE,ID_FILM,ID_UTILIZATOR,NOTA,COMENTARIU) 
+
+VALUES(6,107,2,7.9,'M-A SURPRINS PLACUT'); 
+
+  
+
+INSERT INTO RECENZIE(ID_RECENZIE,ID_FILM,ID_UTILIZATOR,NOTA,COMENTARIU) 
+
+VALUES(7,101,10,8.5,'MA ASTEPTAM LA PUTIN MAI MULT'); 
+
+  
+
+INSERT INTO RECENZIE(ID_RECENZIE,ID_FILM,ID_UTILIZATOR,NOTA,COMENTARIU) 
+
+VALUES(8,104,9,9.2,'RECOMAND'); 
+
+  
+
+INSERT INTO RECENZIE(ID_RECENZIE,ID_FILM,ID_UTILIZATOR,NOTA,COMENTARIU) 
+
+VALUES(9,107,8,4.5,'UN FILM FOARTE SLAB'); 
+
+  
+
+INSERT INTO RECENZIE(ID_RECENZIE,ID_FILM,ID_UTILIZATOR,NOTA,COMENTARIU) 
+
+VALUES(10,100,5,5.8,'DISTRIBUTIA DESTUL DE PROASTA'); 
+
+  
+
+INSERT INTO RECENZIE(ID_RECENZIE,ID_FILM,ID_UTILIZATOR,NOTA,COMENTARIU) 
+
+VALUES(11,107,1,10,'EXCELENT FILM. MI-A PLACUT FOARTE MULT'); 
+
+  
+
+INSERT INTO RECENZIE(ID_RECENZIE,ID_FILM,ID_UTILIZATOR,NOTA,COMENTARIU) 
+
+VALUES(12,106,2,7,'UN FILM DECENT, SE PUTEA CEVA MAI BINE'); 
+
+  
+
+INSERT INTO RECENZIE(ID_RECENZIE,ID_FILM,ID_UTILIZATOR,NOTA,COMENTARIU) 
+
+VALUES(13,104,10,1,'MEDIOCRU. NU RECOMAND'); 
+
+
+--Tabelul BILET 
+
+ 
+
+INSERT INTO BILET(ID_BILET,ID_PROIECTIE,ID_UTILIZATOR,NUMAR_LOC) 
+
+VALUES(1643,25,9,97); 
+
+  
+
+INSERT INTO BILET(ID_BILET,ID_PROIECTIE,ID_UTILIZATOR,NUMAR_LOC) 
+
+VALUES(1876,41,2,134); 
+
+  
+
+INSERT INTO BILET(ID_BILET,ID_PROIECTIE,ID_UTILIZATOR,NUMAR_LOC) 
+
+VALUES(974,34,7,201); 
+
+  
+
+INSERT INTO BILET(ID_BILET,ID_PROIECTIE,ID_UTILIZATOR,NUMAR_LOC) 
+
+VALUES(543,33,6,340); 
+
+  
+
+INSERT INTO BILET(ID_BILET,ID_PROIECTIE,ID_UTILIZATOR,NUMAR_LOC) 
+
+VALUES(2133,44,7,156); 
+
+  
+
+INSERT INTO BILET(ID_BILET,ID_PROIECTIE,ID_UTILIZATOR,NUMAR_LOC) 
+
+VALUES(1980,39,5,100); 
+
+  
+
+INSERT INTO BILET(ID_BILET,ID_PROIECTIE,ID_UTILIZATOR,NUMAR_LOC) 
+
+VALUES(1213,46,2,402); 
+
+  
+
+INSERT INTO BILET(ID_BILET,ID_PROIECTIE,ID_UTILIZATOR,NUMAR_LOC) 
+
+VALUES(876,20,10,21); 
+
+  
+
+INSERT INTO BILET(ID_BILET,ID_PROIECTIE,ID_UTILIZATOR,NUMAR_LOC) 
+
+VALUES(2031,19,9,2); 
+
+  
+
+INSERT INTO BILET(ID_BILET,ID_PROIECTIE,ID_UTILIZATOR,NUMAR_LOC) 
+
+VALUES(1687,27,1,56); 
+
+  
+
+INSERT INTO BILET(ID_BILET,ID_PROIECTIE,ID_UTILIZATOR,NUMAR_LOC) 
+
+VALUES(1094,44,7,143); 
+
+  
+
+INSERT INTO BILET(ID_BILET,ID_PROIECTIE,ID_UTILIZATOR,NUMAR_LOC) 
+
+VALUES(2321,44,7,256); 
+
+  
+
+INSERT INTO BILET(ID_BILET,ID_PROIECTIE,ID_UTILIZATOR,NUMAR_LOC) 
+
+VALUES(1642,34,2,76); 
+
+  
+
+INSERT INTO BILET(ID_BILET,ID_PROIECTIE,ID_UTILIZATOR,NUMAR_LOC) 
+
+VALUES(1100,28,9,101); 
+
+  
+
+INSERT INTO BILET(ID_BILET,ID_PROIECTIE,ID_UTILIZATOR,NUMAR_LOC) 
+
+VALUES(1140,16,9,54); 
+
+  
+
+INSERT INTO BILET(ID_BILET,ID_PROIECTIE,ID_UTILIZATOR,NUMAR_LOC) 
+
+VALUES(1832,42,6,101); 
+
+  
+
+INSERT INTO BILET(ID_BILET,ID_PROIECTIE,ID_UTILIZATOR,NUMAR_LOC) 
+
+VALUES(1982,27,2,56); 
+
+  
+
+INSERT INTO BILET(ID_BILET,ID_PROIECTIE,ID_UTILIZATOR,NUMAR_LOC) 
+
+VALUES(1023,27,8,124); 
+
+  
+
+INSERT INTO BILET(ID_BILET,ID_PROIECTIE,ID_UTILIZATOR,NUMAR_LOC) 
+
+VALUES(2354,28,10,341); 
+
+
+--Tabelul REZERVARE 
+
+ 
+
+INSERT INTO REZERVARE(ID_REZERVARE,ID_PROIECTIE,ID_UTILIZATOR,NUMAR_LOC) 
+
+VALUES(231,42,10,77); 
+
+  
+
+INSERT INTO REZERVARE(ID_REZERVARE,ID_PROIECTIE,ID_UTILIZATOR,NUMAR_LOC) 
+
+VALUES(232,42,10,78); 
+
+  
+
+INSERT INTO REZERVARE(ID_REZERVARE,ID_PROIECTIE,ID_UTILIZATOR,NUMAR_LOC) 
+
+VALUES(233,42,10,79); 
+
+  
+
+INSERT INTO REZERVARE(ID_REZERVARE,ID_PROIECTIE,ID_UTILIZATOR,NUMAR_LOC) 
+
+VALUES(643,39,5,298); 
+
+  
+
+INSERT INTO REZERVARE(ID_REZERVARE,ID_PROIECTIE,ID_UTILIZATOR,NUMAR_LOC) 
+
+VALUES(644,39,5,297); 
+
+  
+
+INSERT INTO REZERVARE(ID_REZERVARE,ID_PROIECTIE,ID_UTILIZATOR,NUMAR_LOC) 
+
+VALUES(43,20,3,89); 
+
+  
+
+INSERT INTO REZERVARE(ID_REZERVARE,ID_PROIECTIE,ID_UTILIZATOR,NUMAR_LOC) 
+
+VALUES(44,20,3,90); 
+
+  
+
+INSERT INTO REZERVARE(ID_REZERVARE,ID_PROIECTIE,ID_UTILIZATOR,NUMAR_LOC) 
+
+VALUES(222,16,7,12); 
+
+  
+
+INSERT INTO REZERVARE(ID_REZERVARE,ID_PROIECTIE,ID_UTILIZATOR,NUMAR_LOC) 
+
+VALUES(341,25,1,55); 
+
+  
+
+INSERT INTO REZERVARE(ID_REZERVARE,ID_PROIECTIE,ID_UTILIZATOR,NUMAR_LOC) 
+
+VALUES(342,25,1,56); 
+
+  
+
+INSERT INTO REZERVARE(ID_REZERVARE,ID_PROIECTIE,ID_UTILIZATOR,NUMAR_LOC) 
+
+VALUES(311,39,8,105); 
+
+
+--Tabelul UTILIZATORI_LA_FILM 
+
+ 
+
+INSERT INTO UTILIZATORI_LA_FILM(ID_FILM, ID_UTILIZATOR) VALUES (100,1);  
+
+INSERT INTO UTILIZATORI_LA_FILM(ID_FILM, ID_UTILIZATOR) VALUES (100,2); 
+
+ INSERT INTO UTILIZATORI_LA_FILM(ID_FILM, ID_UTILIZATOR) VALUES (105,12);  
+
+INSERT INTO UTILIZATORI_LA_FILM(ID_FILM, ID_UTILIZATOR) VALUES (107,10); 
+
+ INSERT INTO UTILIZATORI_LA_FILM(ID_FILM, ID_UTILIZATOR) VALUES (109,4); 
+
+ INSERT INTO UTILIZATORI_LA_FILM(ID_FILM, ID_UTILIZATOR) VALUES (109,7);  
+
+INSERT INTO UTILIZATORI_LA_FILM(ID_FILM, ID_UTILIZATOR) VALUES (108,3);  
+
+INSERT INTO UTILIZATORI_LA_FILM(ID_FILM, ID_UTILIZATOR) VALUES (101,1);  
+
+INSERT INTO UTILIZATORI_LA_FILM(ID_FILM, ID_UTILIZATOR) VALUES (109,5); 
+
+ INSERT INTO UTILIZATORI_LA_FILM(ID_FILM, ID_UTILIZATOR) VALUES (107,6); 
+
+ INSERT INTO UTILIZATORI_LA_FILM(ID_FILM, ID_UTILIZATOR) VALUES (107,2); 
+
+ INSERT INTO UTILIZATORI_LA_FILM(ID_FILM, ID_UTILIZATOR) VALUES (106,11);  
+
+INSERT INTO UTILIZATORI_LA_FILM(ID_FILM, ID_UTILIZATOR) VALUES (103,9);  
+
+INSERT INTO UTILIZATORI_LA_FILM(ID_FILM, ID_UTILIZATOR) VALUES (101,10); 
+
+
+
+--exercitoul 6
+
+
+create or replace procedure decalareFilme is
+    type proiectiiDecalate is table of date index by pls_integer;
+    proiectii_decalate proiectiiDecalate;
+
+    type utilizatoriAfectati is table of varchar2(100);
+    utilizatori_afectati utilizatoriAfectati := utilizatoriAfectati();
+
+    type utilizatoriNorocosi is varray(2) of varchar2(100);
+    utilizatori_norocosi utilizatoriNorocosi := utilizatoriNorocosi(null,null);
+begin
+    for pr in (select id_proiectie, ora_proiectie, data_proiectie
+               from proiectie
+               where to_date(ora_proiectie, 'hh24:mi') >= to_date('17:00', 'hh24:mi')) loop
+        proiectii_decalate(pr.id_proiectie) := to_date(pr.ora_proiectie, 'hh24:mi') + interval '1' hour;
+
+        update proiectie
+        set ora_proiectie = to_char(to_date(ora_proiectie, 'hh24:mi') + interval '1' hour, 'hh24:mi'),
+            data_proiectie = case
+                                when to_date(ora_proiectie, 'hh24:mi') = to_date('23:00', 'hh24:mi') then data_proiectie + 1
+                                else data_proiectie
+                             end
+        where id_proiectie = pr.id_proiectie;
+
+        for client in (
+            select distinct u.email 
+            from utilizator u
+            join bilet b on b.id_utilizator = u.id_utilizator
+            where b.id_proiectie = pr.id_proiectie
+            union
+            select distinct u.email 
+            from utilizator u
+            join rezervare r on r.id_utilizator = u.id_utilizator
+            where r.id_proiectie = pr.id_proiectie
+        ) loop
+            utilizatori_afectati.extend;
+            utilizatori_afectati(utilizatori_afectati.count) := client.email;
+        end loop;
+    end loop;
+
+    dbms_output.put_line('utilizatorii afectati sunt:');
+    for i in 1 .. utilizatori_afectati.count loop
+        dbms_output.put_line(i || '. ' || utilizatori_afectati(i));
+    end loop;
+
+    if utilizatori_afectati.count >= 2 then
+    loop
+        utilizatori_norocosi(1) := utilizatori_afectati(trunc(dbms_random.value(1, utilizatori_afectati.count + 1)));
+        utilizatori_norocosi(2) := utilizatori_afectati(trunc(dbms_random.value(1, utilizatori_afectati.count + 1)));
+        exit when utilizatori_norocosi(1) != utilizatori_norocosi(2);
+    end loop;
+
+        dbms_output.put_line('biletele gratuite sunt castigate de: ' || utilizatori_norocosi(1) || ' si ' || utilizatori_norocosi(2));
+    else
+        dbms_output.put_line('biletele gratuite nu au fost oferite.');
+    end if; 
+end decalareFilme; 
+/
+
+
+
+begin
+    decalareFilme();
+end;
+
+
+
+
+--exercitiul 7
+
+
+
+create or replace procedure filmeNoi is
+    cursor reviewuri(v_id_film number) is
+    select 
+        count(case when nota >= 4 then 1 end) as reviewuriPozitive,
+        count(*) as reviewuriTotale
+    from recenzie
+    where id_film = v_id_film;
+
+    reviewuriPozitive NUMBER;
+    reviewuriTotale NUMBER;
+begin
+    for film in (select id_film, titlu from film
+                where anul_lansarii >= 2000) loop
+        open reviewuri(film.id_film);
+        fetch reviewuri into reviewuriPozitive, reviewuriTotale;
+        close reviewuri;
+
+        if reviewuriPozitive = 1 then
+            dbms_output.put_line(film.titlu || ' are 1 review pozitiv dintr-un total de ' || reviewuriTotale || ' review-uri.');
+        else
+            dbms_output.put_line(film.titlu || ' are ' || reviewuriPozitive || ' review-uri pozitive dintr-un total de ' || reviewuriTotale || ' review-uri.');
+        end if;
+    end loop;
+end filmeNoi; 
+/
+
+
+begin
+    filmeNoi();
+end;
+
+
+
+--exercitiul 8
+
+insert into film(id_film,titlu) values (10000,'Titanic');
+
+create or replace function filmReview(p_titlu_film in film.titlu%type)
+   return varchar2 is
+   v_id_film film.id_film%type;
+   v_rezultat varchar2(4000);
+begin
+   select id_film
+   into v_id_film
+   from film
+   where titlu = p_titlu_film;
+
+   select listagg(u.nume || ' ' || u.prenume, ', ') within group (order by u.nume)
+   into v_rezultat
+   from recenzie r
+   join utilizator u on r.id_utilizator = u.id_utilizator
+   join proiectie p on p.id_film = r.id_film
+   where r.id_film = v_id_film and extract(month from p.data_proiectie) in (6, 7, 8);
+
+   if v_rezultat is null then
+      return 'nicio recenzie gasita pentru acest film în lunile de vara.';
+   end if;
+
+   return v_rezultat;
+
+exception
+   when no_data_found then
+      raise_application_error(-20000, 'nu exista film cu numele dat');
+   when too_many_rows then
+      raise_application_error(-20001, 'exista mai multe filme cu numele dat');
+   when others then
+      raise_application_error(-20002, 'alta eroare');
+end filmReview;
+/
+
+
+--apel pentru too_many_rows
+begin
+   dbms_output.put_line(filmReview('Titanic'));
+end;
+/
+
+--apel pentru no_data_found
+begin
+   dbms_output.put_line(filmReview('cenusareasa'));
+end;
+/
+
+--un apel care afiseaza bine
+begin
+   dbms_output.put_line(filmReview('Venom'));
+end;
+/
+
+--un apel pentru film fara recenzii vara
+begin
+   dbms_output.put_line(filmReview('Masca'));
+end;
+/
+
+
+--exercitiul 9
+
+
+create or replace procedure statistica_sala(p_nume_sala in sala.nume_sala%type, k in number) is
+   sala_inexistenta exception;
+   nicio_proiectie exception;
+   sala_duplicata exception;
+   v_count integer;
+begin
+   if p_nume_sala is null then
+      raise_application_error(-20001, 'Parametrul p_nume_sala nu poate fi NULL.');
+   end if;
+
+   if k is null or k < 0 then
+      raise_application_error(-20002, 'Parametrul k trebuie sa fie un numar natural.');
+   end if;
+
+   select count(*)
+   into v_count
+   from sala
+   where nume_sala = p_nume_sala;
+
+   if v_count = 0 then
+      raise sala_inexistenta;
+   end if;
+   
+   if v_count > 1 then
+      raise sala_duplicata;
+   end if;
+
+   select count(*)
+   into v_count
+   from proiectie p
+   join sala s on p.id_sala = s.id_sala
+   where s.nume_sala = p_nume_sala
+     and p.data_proiectie >= add_months(sysdate, -k);
+
+   if v_count = 0 then
+      raise nicio_proiectie;
+   end if;
+
+   
+   for r in (
+      select f.titlu as film,
+             count(b.id_bilet) as total_bilete,
+             listagg(u.id_utilizator, ', ') within group (order by u.id_utilizator) as id_clienti
+      from sala s
+      join proiectie p on s.id_sala = p.id_sala
+      join film f on p.id_film = f.id_film
+      join bilet b on p.id_proiectie = b.id_proiectie
+      join utilizator u on b.id_utilizator = u.id_utilizator
+      where s.nume_sala = p_nume_sala
+        and p.data_proiectie >= add_months(sysdate, -k)
+      group by f.titlu
+      order by f.titlu
+   ) loop
+      dbms_output.put_line('Film: ' || r.film);
+      dbms_output.put_line('Bilete cumparate fizic: ' || r.total_bilete);
+      dbms_output.put_line('ID clienti: ' || r.id_clienti);
+   end loop;
+
+exception
+   when sala_inexistenta then
+      dbms_output.put_line('Sala ' || p_nume_sala || ' nu exista în baza de date.');
+   when nicio_proiectie then
+      dbms_output.put_line('Nu exista proiectii în ultimele ' || k || ' luni pentru sala ' || p_nume_sala);
+   when sala_duplicata then
+      dbms_output.put_line('Sala ' || p_nume_sala ||' apare de mai multe ori in baza de date');
+   when others then
+      dbms_output.put_line('Eroare');
+end statistica_sala;
+/
+
+
+--cazul in care nu este executata nicio exceptie  
+
+begin  
+
+statistica_sala('Caragiale', 7);  
+
+end;  
+
+/ 
+
+
+--cazul in care sala nu exista  
+
+begin  
+
+statistica_sala('aaa', 7);  
+
+end;  
+
+/ 
+
+
+--cazul in care nu avem nicio proiectie in ultimele k luni  
+
+begin  
+
+statistica_sala('Luceafarul', 5);  
+
+end;  
+
+/ 
+
+
+-cazul in care apare o alta eroare, cum ar fi introducerea unui numar negativ ca numar de luni  
+
+begin  
+
+statistica_sala('Luceafarul', -3);  
+
+end;  
+
+/ 
+
+
+
+--exercitiul 10
+
+create or replace trigger trigger_lmd_comanda
+after insert or update or delete on film
+declare
+   v_operatie varchar2(20);
+begin
+   if inserting then
+      v_operatie := 'INSERT';
+   elsif updating then
+      v_operatie := 'UPDATE';
+   elsif deleting then
+      v_operatie := 'DELETE';
+   end if;
+
+   dbms_output.put_line('Operatia executata: ' || v_operatie);
+end;
+/
+
+update film
+set gen = 'drama'
+where id_film=10000;
+
+insert into film(id_film,titlu) values (10001, 'Cenusareasa');
+
+delete from film
+where id_film=10001;
+
+
+--exercitiul 11
+
+create table film_update(
+    data_modificare date,
+    coloana_modificata varchar2(50),
+    id_film number,
+    valoare_veche varchar2(255),
+    valoare_noua varchar2(255)
+);
+
+
+create or replace trigger trigger_lmd_linie
+after update on film
+for each row
+begin
+   if :old.titlu != :new.titlu then
+      insert into film_update (id_film, data_modificare, coloana_modificata, valoare_veche, valoare_noua)
+      values (:old.id_film, sysdate, 'titlu', :old.titlu, :new.titlu);
+   end if;
+
+   if :old.durata != :new.durata then
+      insert into film_update (id_film, data_modificare, coloana_modificata, valoare_veche, valoare_noua)
+      values (:old.id_film, sysdate, 'durata', to_char(:old.durata), to_char(:new.durata));
+   end if;
+
+   if :old.gen != :new.gen then
+      insert into film_update (id_film, data_modificare, coloana_modificata, valoare_veche, valoare_noua)
+      values (:old.id_film, sysdate, 'gen', :old.gen, :new.gen);
+   end if;
+
+   if :old.descriere != :new.descriere then
+      insert into film_update (id_film, data_modificare, coloana_modificata, valoare_veche, valoare_noua)
+      values (:old.id_film, sysdate, 'descriere', :old.descriere, :new.descriere);
+   end if;
+
+   if :old.regizor != :new.regizor then
+      insert into film_update (id_film, data_modificare, coloana_modificata, valoare_veche, valoare_noua)
+      values (:old.id_film, sysdate, 'regizor', :old.regizor, :new.regizor);
+   end if;
+
+   if :old.anul_lansarii != :new.anul_lansarii then
+      insert into film_update (id_film, data_modificare, coloana_modificata, valoare_veche, valoare_noua)
+      values (:old.id_film, sysdate, 'anul_lansarii', to_char(:old.anul_lansarii), to_char(:new.anul_lansarii));
+   end if;
+end;
+/
+
+
+
+update film 
+set gen='Sci-Fi'
+where id_film=10000;
+
+update film 
+set titlu='titanic'
+where id_film=10000;
+
+update film 
+set titlu='Titanic'
+where id_film=10000;
+
+update film 
+set regizor='robert'
+where id_film=10000;  
+
+
+
+--exercitiul 12
+
+create table monitorizare_tabele(
+    id number generated by default as identity primary key,
+    actiune varchar2(50),
+    tabel varchar2(50),
+    data_actiune date);
+
+
+create or replace trigger trigger_ldd
+before drop or alter or create on schema
+begin
+   if ora_sysevent = 'DROP' and ora_dict_obj_type = 'TABLE' then
+      raise_application_error(-20001, 'Stergerea tabelelor este interzisa în aceasta baza de date.');
+   end if;
+
+   if ora_sysevent in ('CREATE', 'ALTER') and ora_dict_obj_type = 'TABLE' then
+      insert into monitorizare_tabele (actiune, tabel, data_actiune)
+      values (ora_sysevent, ora_dict_obj_name, sysdate);
+   end if;
+end;
+/
+
+create table Test(
+    id number generated by default as identity primary key,
+    camp1 varchar2(255),
+    camp2 number);
+    
+
+alter table Test add camp3 date;
+
+drop table Test;
